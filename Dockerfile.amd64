@@ -16,7 +16,7 @@ RUN apt-get update -y && \
     python3 -m pip install -U pip && \
     python3 -m pip install flask $VOSK && \
     strip `python3 -c "import vosk as _; print(_.__file__.rsplit('/', 1)[0])"`/_vosk.so && \
-    wget $MODEL -O model.tar.gz && \
+    wget -q $MODEL -O model.tar.gz && \
     mkdir km && tar -xzf model.tar.gz -C km && mv km/* ./model && rm -rf km && rm model.tar.gz && \
     apt-get remove --purge -y $BUILD_PACKAGES $(apt-mark showauto) && \
     apt-get autoremove -y && \

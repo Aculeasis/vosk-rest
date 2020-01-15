@@ -3,7 +3,7 @@ FROM arm32v7/ubuntu:bionic
 
 ARG MODEL="https://github.com/alphacep/kaldi-android-demo/releases/download/2020-01/alphacep-model-android-ru-0.3.tar.gz"
 ARG VOSK="vosk"
-ARG RUNTIME_PACKAGES="python3.7 locales libgfortran4"
+ARG RUNTIME_PACKAGES="python3.7 locales libgfortran5"
 ARG BUILD_PACKAGES="wget ca-certificates binutils python3-dev python3-pip python3-setuptools"
 
 RUN apt-get update -y && \
@@ -16,7 +16,7 @@ RUN apt-get update -y && \
     python3 -m pip install -U pip && \
     python3 -m pip install flask $VOSK && \
     strip `python3 -c "import vosk as _; print(_.__file__.rsplit('/', 1)[0])"`/_vosk.so && \
-    wget $MODEL -O model.tar.gz && \
+    wget -q $MODEL -O model.tar.gz && \
     mkdir km && tar -xzf model.tar.gz -C km && mv km/* ./model && rm -rf km && rm model.tar.gz && \
     apt-get remove --purge -y $BUILD_PACKAGES $(apt-mark showauto) && \
     apt-get autoremove -y && \
