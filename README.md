@@ -13,6 +13,8 @@
 - x86_64 `docker run -d -p 8086:8086 aculeasis/vosk-rest:amd64`
 
 ### Сборка и запуск докера
+
+Для поддержки другого языка измените ссылку в `MODEL` Dockerfile'a на соответствующую [отсюда](https://github.com/alphacep/kaldi-android-demo/releases).
 ```
 git clone https://github.com/Aculeasis/vosk-rest
 cd vosk-rest
@@ -20,7 +22,6 @@ cd vosk-rest
 docker build -t vosk-rest -f Dockerfile.arm64v8 .
 docker run -d -p 8086:8086 vosk-rest
 ```
-Для поддержки другого языка измените ссылку в `MODEL` Dockerfile'a на соответствующую [отсюда](https://github.com/alphacep/kaldi-android-demo/releases).
 
 ## API
 Отправить файл через POST
