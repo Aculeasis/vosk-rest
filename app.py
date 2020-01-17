@@ -4,7 +4,7 @@ import json
 import os
 from io import BytesIO
 
-from flask import Flask, request, json
+from flask import Flask, request, json as json_flask
 from vosk import Model, KaldiRecognizer
 
 MODEL_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'model')
@@ -38,21 +38,16 @@ def say():
             target = BytesIO(request.data)
 
         if target is None:
-            text = 'No data'
-            code = 1
+            code, text = 1, 'No data'
         else:
             try:
-                text = stt(target)
+                code, text = 0, stt(target)
             except Exception as e:
-                text = 'Internal error'
-                code = 3
+                code, text = 3, 'Internal error'
                 print('{}: {}'.format(text, e))
-            else:
-                code = 0
     else:
-        text = 'What do you want? I accept only POST!'
-        code = 2
-    return json.jsonify({'text': text, 'code': code})
+        code, text = 2, 'What do you want? I accept only POST!'
+    return json_flask.jsonify(text=text, code=code)
 
 
 if __name__ == "__main__":

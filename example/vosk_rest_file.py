@@ -1,40 +1,24 @@
 #!/usr/bin/env python3
 
-import wave
-from urllib.request import Request, urlopen
-from urllib.error import URLError, HTTPError
-import json
 import audioop
-from io import BytesIO
+import json
 import sys
+import wave
+from io import BytesIO
+from urllib.request import Request, urlopen
 
 
-class STT:
-    def __init__(self, wav_file, url='http://127.0.0.1:8086'):
-        self._text = None
-        request = Request('{}/stt'.format(url), data=_get_wav(wav_file), headers={'Content-Type': 'audio/wav'})
-        try:
-            response = urlopen(request)
-        except HTTPError as e:
-            raise RuntimeError('Request failed: {}'.format(e.reason))
-        except URLError as e:
-            raise RuntimeError('Connection failed: {}'.format(e.reason))
-        response_text = response.read().decode('utf-8')
-        try:
-            result = json.loads(response_text)
-        except (json.JSONDecodeError, ValueError) as e:
-            raise RuntimeError('Json decode error: {}'.format(e))
+def stt(wav_file: str, url: str) -> str:
+    print('Connecting to \'{}\'...'.format(url))
+    request = Request('{}/stt'.format(url), data=_load_wav(wav_file), headers={'Content-Type': 'audio/wav'})
+    result = json.loads(urlopen(request).read().decode('utf-8'))
 
-        if 'code' not in result or 'text' not in result or result['code']:
-            raise RuntimeError('Server error: {}: {}'.format(result.get('code', 'None'), result.get('text', 'None')))
-        self._text = result['text']
-
-    def text(self):
-        return self._text
+    if not ('code' in result and 'text' in result):
+        raise RuntimeError('Wrong reply from server: {}'.format(result))
+    return result['text'] if not result['code'] else 'Server error: [{code}]: {text}'.format(**result)
 
 
-def _get_wav(wav_file, convert_rate=16000, convert_width=2):
-    channels = 1
+def _load_wav(wav_file, convert_rate=16000, convert_width=2, channels=1):
     with wave.open(wav_file, 'rb') as in_:
         src_rate = in_.getframerate()
         src_data = in_.readframes(in_.getnframes())
@@ -55,8 +39,7 @@ def _main():
         exit(1)
     file = sys.argv[1]
     server = 'http://127.0.0.1:8086' if len(sys.argv) < 3 else sys.argv[2]
-    stt = STT(file, server)
-    print('return: {}'.format(stt.text()))
+    print('Result: {}'.format(stt(file, server)))
 
 
 if __name__ == '__main__':
