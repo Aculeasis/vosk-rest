@@ -2,8 +2,7 @@
 ============
 [![Docker Pulls](https://img.shields.io/docker/pulls/aculeasis/vosk-rest.svg)](https://hub.docker.com/r/aculeasis/vosk-rest/)
 
-Простой веб-сервис распознавания речи с помощью [Vosk](https://github.com/alphacep/vosk-api) и [Kaldi](https://github.com/alphacep/kaldi)
-через [vosk-api](https://github.com/alphacep/vosk-api).
+Простой локальный веб-сервис распознавания речи через [vosk-api](https://github.com/alphacep/vosk-api).
 
 ## Установка
 
@@ -14,7 +13,8 @@
 
 ### Сборка и запуск докера
 
-Для поддержки другого языка измените ссылку в `MODEL` Dockerfile'a на соответствующую [отсюда](https://alphacephei.com/vosk/models).
+Для поддержки другого языка измените имя модели в `MODEL_NAME` Dockerfile'a на нужную [отсюда](https://alphacephei.com/vosk/models) (без .zip).
+ По умолчанию используется облегченная модель `vosk-model-small-ru-0.4`, для более качественного распознавания используйте `vosk-model-ru-0.10`.
 ```
 git clone https://github.com/Aculeasis/vosk-rest
 cd vosk-rest
@@ -48,9 +48,3 @@ docker run -d -p 8086:8086 vosk-rest
 [examples](https://github.com/Aculeasis/vosk-rest/tree/master/example)
 
 Для проверки сервера можно использовать `vosk_rest_file.py FILE [URL]`
-
-## Ссылки
-- [vosk-api](https://github.com/alphacep/vosk-api)
-- [Vosk](https://github.com/alphacep/vosk)
-- [Kaldi](https://github.com/alphacep/kaldi)
-- [Модели](https://github.com/alphacep/kaldi-android-demo/releases)

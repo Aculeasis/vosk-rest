@@ -1,10 +1,11 @@
 FROM arm32v7/ubuntu:bionic
 
 
-ARG MODEL="https://github.com/alphacep/kaldi-android-demo/releases/download/2020-01/alphacep-model-android-ru-0.3.tar.gz"
-ARG VOSK="vosk==0.3.3"
+ARG MODEL_NAME="vosk-model-small-ru-0.4"
+ARG MODEL_URL="https://alphacephei.com/vosk/models/${MODEL_NAME}.zip"
+ARG VOSK_API="vosk==0.3.10"
 ARG RUNTIME_PACKAGES="python3.7 locales libgfortran3"
-ARG BUILD_PACKAGES="wget ca-certificates python3-dev python3-pip python3-setuptools"
+ARG BUILD_PACKAGES="wget ca-certificates python3-dev python3-pip python3-setuptools unzip"
 
 RUN apt-get update -y && \
     apt-get -y install --no-install-recommends $RUNTIME_PACKAGES && \
@@ -14,9 +15,10 @@ RUN apt-get update -y && \
     locale-gen ru_RU.UTF-8 && \
     update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.7 1 && \
     python3 -m pip install -U pip && \
-    python3 -m pip install flask $VOSK && \
-    wget -q $MODEL -O model.tar.gz && \
-    mkdir km && tar -xzf model.tar.gz -C km && mv km/* ./model && rm -rf km && rm model.tar.gz && \
+    python3 -m pip install flask $VOSK_API && \
+    wget -q $MODEL_URL -O model.zip && \
+    unzip -q model.zip && mv $MODEL_NAME model && \
+    rm -rf model.zip model/extra model/rnnlm && \
     apt-get remove --purge -y $BUILD_PACKAGES $(apt-mark showauto) && \
     apt-get autoremove -y && \
     apt-get -y install --no-install-recommends $RUNTIME_PACKAGES && \

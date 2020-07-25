@@ -16,7 +16,6 @@ kaldi_model = Model(MODEL_PATH)
 
 def stt(fp,  buffer_size=8192) -> str:
     kaldi = KaldiRecognizer(kaldi_model, 16000)
-    fp.read(44)  # skip header
     buf = bytearray(buffer_size)
     im_ok = False
     while fp.readinto(buf):
