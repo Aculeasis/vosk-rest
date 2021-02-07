@@ -3,7 +3,7 @@ FROM amd64/ubuntu:20.04
 
 ARG MODEL_NAME="vosk-model-small-ru-0.4"
 ARG MODEL_URL="https://alphacephei.com/vosk/models/${MODEL_NAME}.zip"
-ARG VOSK_API="vosk==0.3.10"
+ARG VOSK_API="vosk==0.3.17"
 ARG RUNTIME_PACKAGES="python3 locales"
 ARG BUILD_PACKAGES="wget ca-certificates python3-pip unzip"
 
