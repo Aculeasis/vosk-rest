@@ -5,7 +5,7 @@ ARG MODEL_NAME="vosk-model-small-ru-0.22"
 ARG MODEL_URL="https://alphacephei.com/vosk/models/${MODEL_NAME}.zip"
 ARG VOSK_API="vosk==0.3.45"
 ARG RUNTIME_PACKAGES="python3 locales libatomic1"
-ARG BUILD_PACKAGES="wget ca-certificates python3-pip unzip"
+ARG BUILD_PACKAGES="wget ca-certificates python3-pip unzip build-essential python3-dev libffi-dev"
 
 RUN apt-get update -y && \
     apt-get -y install --no-install-recommends $RUNTIME_PACKAGES && \
