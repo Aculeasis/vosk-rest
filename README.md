@@ -7,9 +7,9 @@
 ## Установка
 
 ### Готовый докер
-- aarch64 `docker run -d -p 8086:8086 aculeasis/vosk-rest:arm64v8`
-- armv7l`docker run -d -p 8086:8086 aculeasis/vosk-rest:arm32v7`
-- x86_64 `docker run -d -p 8086:8086 aculeasis/vosk-rest:amd64`
+- aarch64 `docker run -d --name vosk-rest -p 8086:8086 aculeasis/vosk-rest:arm64v8`
+- armv7l`docker run -d --name vosk-rest -p 8086:8086 aculeasis/vosk-rest:arm32v7`
+- x86_64 `docker run --name vosk-rest -d -p 8086:8086 aculeasis/vosk-rest:amd64`
 
 ### Сборка и запуск докера
 

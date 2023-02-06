@@ -1,9 +1,9 @@
-FROM arm32v7/ubuntu:20.04
+FROM arm32v7/ubuntu:22.04
 
 
-ARG MODEL_NAME="vosk-model-small-ru-0.4"
+ARG MODEL_NAME="vosk-model-small-ru-0.22"
 ARG MODEL_URL="https://alphacephei.com/vosk/models/${MODEL_NAME}.zip"
-ARG VOSK_API="vosk==0.3.17"
+ARG VOSK_API="vosk==0.3.45"
 ARG RUNTIME_PACKAGES="python3 locales libatomic1"
 ARG BUILD_PACKAGES="wget ca-certificates python3-pip unzip"
 
@@ -16,7 +16,7 @@ RUN apt-get update -y && \
     python3 -m pip install flask $VOSK_API && \
     wget -q $MODEL_URL -O model.zip && \
     unzip -q model.zip && mv $MODEL_NAME model && \
-    rm -rf model.zip model/extra model/rnnlm && \
+    rm -rf model.zip && \
     apt-get remove --purge -y $BUILD_PACKAGES $(apt-mark showauto) && \
     apt-get autoremove -y && \
     apt-get -y install --no-install-recommends $RUNTIME_PACKAGES && \

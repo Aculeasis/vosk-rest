@@ -16,10 +16,9 @@ kaldi_model = Model(MODEL_PATH)
 
 def stt(fp,  buffer_size=8192) -> str:
     kaldi = KaldiRecognizer(kaldi_model, 16000)
-    buf = bytearray(buffer_size)
     im_ok = False
-    while fp.readinto(buf):
-        kaldi.AcceptWaveform(buf)
+    while chunk := fp.read(buffer_size):
+        kaldi.AcceptWaveform(chunk)
         im_ok = True
     return json.loads(kaldi.FinalResult())['text'] if im_ok else ''
 
