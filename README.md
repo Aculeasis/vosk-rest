@@ -14,7 +14,7 @@
 ### Сборка и запуск докера
 
 Для поддержки другого языка измените имя модели в `MODEL_NAME` Dockerfile'a на нужную [отсюда](https://alphacephei.com/vosk/models) (без .zip).
- По умолчанию используется облегченная модель `vosk-model-small-ru-0.4`, для более качественного распознавания используйте `vosk-model-ru-0.10`.
+ По умолчанию используется облегченная модель `vosk-model-small-ru-0.22`, для более качественного распознавания используйте `vosk-model-ru-0.10`.
 ```
 git clone https://github.com/Aculeasis/vosk-rest
 cd vosk-rest
