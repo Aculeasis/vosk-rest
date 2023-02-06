@@ -9,7 +9,7 @@
 ### Готовый докер
 - aarch64 `docker run -d --name vosk-rest -p 8086:8086 aculeasis/vosk-rest:arm64v8`
 - armv7l`docker run -d --name vosk-rest -p 8086:8086 aculeasis/vosk-rest:arm32v7`
-- x86_64 `docker run --name vosk-rest -d -p 8086:8086 aculeasis/vosk-rest:amd64`
+- x86_64 `docker run -d --name vosk-rest -p 8086:8086 aculeasis/vosk-rest:amd64`
 
 ### Сборка и запуск докера
 
@@ -20,7 +20,7 @@ git clone https://github.com/Aculeasis/vosk-rest
 cd vosk-rest
 # Указать Dockerfile под целевую архитектуру
 docker build -t vosk-rest -f Dockerfile.arm64v8 .
-docker run -d -p 8086:8086 vosk-rest
+docker run -d --name vosk-rest -p 8086:8086 vosk-rest
 ```
 
 ## API
