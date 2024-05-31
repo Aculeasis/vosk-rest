@@ -1,15 +1,24 @@
 [vosk-rest](https://github.com/Aculeasis/vosk-rest)
 ============
-[![Docker Pulls](https://img.shields.io/docker/pulls/aculeasis/vosk-rest.svg)](https://hub.docker.com/r/aculeasis/vosk-rest/)
 
 Простой локальный веб-сервис распознавания речи через [vosk-api](https://github.com/alphacep/vosk-api).
 
-## Установка
+## Docker
+```bash
+docker run -d \
+  --name=rhvoice-rest \
+  -p 8086:8086 \
+  --restart unless-stopped \
+  ghcr.io/aculeasis/vosk-rest:latest
+```
+Поддерживаемые архитектуры:
+| Architecture | Available | Tag |
+| :----: | :----: | ---- |
+| x86-64 | ✅ | amd64 |
+| arm64 | ✅ | arm64v8 |
+| armhf | ✅ | arm32v7 |
 
-### Готовый докер
-- aarch64 `docker run -d --name vosk-rest -p 8086:8086 aculeasis/vosk-rest:arm64v8`
-- armv7l`docker run -d --name vosk-rest -p 8086:8086 aculeasis/vosk-rest:arm32v7`
-- x86_64 `docker run -d --name vosk-rest -p 8086:8086 aculeasis/vosk-rest:amd64`
+Для автоматического обновления можно использовать [Watchtower](https://github.com/containrrr/watchtower).
 
 ### Сборка и запуск докера
 
